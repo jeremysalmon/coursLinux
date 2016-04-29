@@ -1,0 +1,148 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Cours Linux 101</title>
+        <meta name="description" content="Cours Linux 101">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+            p{
+              font-size:1.5em;
+            }
+            li{
+              font-size:1.5em;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="sommaire.html">Cours Linux 101 (Sommaire)</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Linux et les fichiers</h2>
+            <h3>Structure des répertoires</h3>
+            <ul>
+              <li><strong>bin</strong> : contient des programmes (exécutables) susceptibles d'être utilisés par tous les utilisateurs de la machine.</li>
+              <li><strong>boot</strong> : fichiers permettant le démarrage de Linux.</li>
+              <li><strong>dev</strong> : fichiers contenant les périphériques. En fait – on en reparlera plus tard – ce dossier contient des sous-dossiers qui « représentent » chacun un périphérique. On y retrouve ainsi par exemple le fichier qui représente le lecteur CD.</li>
+              <li><strong>etc</strong> : fichiers de configuration.</li>
+              <li><strong>home</strong> : répertoires personnels des utilisateurs. On en a déjà parlé un peu avant : c'est dans ce dossier que vous placerez vos fichiers personnels, à la manière du dossier Mes documents de Windows.
+              <br>Chaque utilisateur de l'ordinateur possède son dossier personnel. Par exemple, dans mon cas mon dossier personnel se trouve dans /home/mateo21/. S'il y avait un autre utilisateur (appelons-le Patrick) sur mon ordinateur, il aurait eu droit lui aussi à son propre dossier : /home/patrick/.
+              <li><strong>lib</strong> : dossier contenant les bibliothèques partagées (généralement des fichiers .so) utilisées par les programmes. C'est en fait là qu'on trouve l'équivalent des .dll de Windows.</li>
+              <li><strong>media</strong> : lorsqu'un périphérique amovible (comme une carte mémoire SD ou une clé USB) est inséré dans votre ordinateur, Linux vous permet d'y accéder à partir d'un sous-dossier de media. On parle de montage.</li>
+              <li><strong>mnt</strong> : c'est un peu pareil que media, mais pour un usage plus temporaire.</li>
+              <li><strong>opt</strong> : répertoire utilisé pour les add-ons de programmes.</li>
+              <li><strong>proc</strong> : contient des informations système.</li>
+              <li><strong>root</strong> : c'est le dossier personnel de l'utilisateur « root ». Normalement, les dossiers personnels sont placés dans home, mais celui de « root » fait exception. En effet, comme je vous l'ai dit dans le chapitre précédent, « root » est le superutilisateur, le « chef » de la machine en quelque sorte. Il a droit à un espace spécial.</li>
+              <li><strong>sbin</strong> : contient des programmes système importants.</li>
+              <li><strong>tmp</strong> : dossier temporaire utilisé par les programmes pour stocker des fichiers.</li>
+              <li><strong>usr</strong> : c'est un des plus gros dossiers, dans lequel vont s'installer la plupart des programmes demandés par l'utilisateur.</li>
+              <li><strong>var</strong> : ce dossier contient des données « variables », souvent des logs (traces écrites de ce qui s'est passé récemment sur l'ordinateur).</li>
+            </ul>
+            <h3>Commandes pour manipuler fichiers et répertoires</h3>
+            <ul>
+              <li>pwd : afficher le dossier actuel « Print Working Directory »</li>
+              <li>which : connaître l'emplacement d'une commande</li>
+              <li>ls : lister les fichiers et dossiers<br>
+                  ls --color=auto<br>
+                  -a : afficher tous les fichiers et dossiers cachés<br>
+                  -F : indique le type d'élément<br>
+                  -l : liste détaillée<br>
+                  -h : afficher la taille en Ko, Mo, Go…<br>
+                  -t : trier par date de dernière modification<br>
+              </li>
+              <li>cd: changer de dossier</li>
+              <li>du: taille occupée par les dossiers<br>
+                  -h : la taille pour les humains<br>
+                  -a : afficher la taille des dossiers ET des fichiers<br>
+                  -s : avoir juste le grand total<br>
+              </li>
+              <li>cat : afficher tout le fichier</li>
+              <li>less : afficher le fichier page par page<br>
+                  Espace : affiche la suite du fichier. La touche Espace fait défiler le fichier vers le bas d'un « écran » de console. C'est celle que j'utilise le plus souvent.<br>
+                  Entrée : affiche la ligne suivante. Cela permet donc de faire défiler le fichier vers le bas ligne par ligne.<br>
+                  d : affiche les onze lignes suivantes (soit une moitié d'écran). C'est un peu l'intermédiaire entre Espace (tout un écran) et Entrée (une seule ligne).<br>
+                  b : retourne en arrière d'un écran.<br>
+                  y : retourne d'une ligne en arrière.<br>
+                  u : retourne en arrière d'une moitié d'écran (onze lignes).<br>
+                  q : arrête la lecture du fichier. Cela met fin à la commande less.<br>
+                  = : indique où vous en êtes dans le fichier (numéro des lignes affichées et pourcentage).<br>
+                  h : affiche l'aide (toutes les commandes que je vous apprends ici, je les tire de là). Tapez q pour sortir de l'aide.<br>
+                  / : tapez / suivi du texte que vous recherchez pour lancer le mode recherche. Faites Entrée pour valider. Pour ceux qui savent s'en servir, sachez que les expressions régulières sont acceptées. Je ne vais pas vous faire un cours sur les expressions régulières ici, ce serait trop long, mais il y en a un dans mon cours sur le PHP Concevez votre site Web avec PHP et MySQL dans la même collection.<br>
+                  n : après avoir fait une recherche avec /, la touche n vous permet d'aller à la prochaine occurrence de votre recherche. C'est un peu comme si vous cliquiez sur le bouton « Résultat suivant ».<br>
+                  N : pareil que n, mais pour revenir en arrière.<br>
+              </li>
+              <li>head : afficher le début du fichier</li>
+              <li>tail : afficher la fin du fichier<br>
+              -f : affiche le fichier en temps réel<br>
+              -n : affiche les xxx dernières lignes du fichier<br>
+              </li>
+              <li>touch : créer un fichier</li>
+              <li>mkdir : créer un dossier<br>
+              -p : créé les dossiers intermédiaires
+              </li>
+              <li>cp : copier un fichier<br>
+              -R : pour copier récursivement les sous répertoires
+              </li>
+              <li>mv : déplacer un fichier</li>
+              <li>rm : supprimer des fichiers et dossiers<br>
+              -i : demander confirmation<br>
+              -f : forcer la suppression, quoi qu'il arrive<br>
+              -r : récursivité sur les sous répertoires
+              </li>
+              <li>ln : création de liens<br>
+                Parfois il est utile de faire un lien symbolique (équivalent à un raccourci sous windows)<br>
+                ln -s fichier1 fichier2 créé un lien symbolique fichier2 sur le fichier1
+              </li>
+              <li>locate : chercher un fichier</li>
+              <h2>A Faire (30 minutes)</h2>
+              <p>Créer un répertoire ssh dans votre /root/</p>
+              <p>Faites des lients symboliques des fichiers de configuration de ssh dans /root/ssh/</p>
+              <p>Affichez les 30 dernières lignes de /var/log/syslog et les écrire dans le fichier /root/test.log</p>
+              <p>Trouvez l'heure de démarrage de la machine en cherchant (avec grep, cat et |) "Initializing cgroup"</p>
+              <p>Trouvez ou se situe le fichier executable de l'application grep</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <a class="btn btn-primary btn-lg pull-right" href="utilisateurs.html" role="button">Continuer &raquo;</a>
+          </div>
+        </div>
+      </div>
+
+      <script src="js/vendor/jquery-1.11.2.min.js"></script>
+      <script src="js/vendor/bootstrap.min.js"></script>
+      <script src="js/main.js"></script>
+    </body>
+</html>

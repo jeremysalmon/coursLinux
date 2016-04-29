@@ -1,0 +1,119 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Cours Linux 101</title>
+        <meta name="description" content="Cours Linux 101">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+            p{
+              font-size:1.5em;
+            }
+            li{
+              font-size:1.5em;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="sommaire.html">Cours Linux 101 (Sommaire)</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Gestion des utilisateurs</h2>
+            <p style="text-align:center"><img src="img/droits.png" /></p>
+            <p><strong>sudo</strong> : devenir super utilisateur</p>
+            <p><strong>su</strong> : devenir super utilisateur et le rester</p>
+            <p><strong>adduser</strong> : ajouter un utilisateur<br>
+            ex : adduser mohamed
+            </p>
+            <p><strong>passwd</strong> : changer le mot de passe d'un utilisateur<br>
+            ex : passwd mohamed
+            </p>
+            <p><strong>deluser</strong> : supprimer un compte utilisateur<br>
+            ex : deluser mohamed<br>
+            ex : deluser --remove-home mohamed
+            </p>
+            <p><strong>addgroup</strong> : ajouter un groupe<br>
+            ex : addgroup monGroupe
+            </p>
+            <p><strong>usermod</strong> : modifie un utilisateur<br>
+            ex : usermod -l mohamed reda <- renomme l'utilisateur mohamed en reda<br>
+            ex : usermod -g monGroupe mohamed <- change le groupe de mohamed<br>
+            ex : usermod -G monGroupe,www-data mohamed <- change et associe plusieurs groupes à mohamed<br>
+            ex : usermod -aG postfix mohamed <- ajoute un groupe à mohamed
+            </p>
+            <p><strong>delgroup</strong> : supprime un groupe</p>
+            <p><strong>chown</strong> : changer le propriétaire d'un fichier / répertoires<br>
+            -R pour le récursif
+            </p>
+            <p><strong>chgroup</strong> : changer le groupe d'un fichier<br>
+            chown peut également changer un groupe au format : chown groupe:utilisateur fichier
+            </p>
+            <p><strong>chmod</strong> : chnager les droits sur un fichier</p>
+            <p>
+              Un droit de lecture à la valeur 4 (r)<br>
+              Un droit d'écriture à la valeur 2 (w)<br>
+              Un droit d'execution à la valeur 1 (x)<br>
+              Si nous voulons donner les droits en lecture/ecriture/execution c'est donc un 7.<br>
+              Si nous voulons donner les droits en lecture c'est un 4
+            </p>
+            <p>
+              Un fichier à 3 types de droits :
+              <ul>
+                <li>Pour le propriétaire</li>
+                <li>Pour le groupe</li>
+                <li>Pour les autres</li>
+              </ul>
+            </p>
+            <h2>A faire (30 minutes)</h2>
+            <p>Créer des groupes "compta","informatique" et "commercial"</p>
+            <p>Créer un utilisateur reda (groupe compta), hanane (groupe informatique) et boris (groupe commercial).</p>
+            <p>Créer un utilisateur ahmed (groupe compta, informatique et commercial)</p>
+            <p>Créer un répertoire /var/donnees/entreprise/compta et donner les droits en lecture / ecriture uniquement au groupe compta. Le propriétaire est reda</p>
+            <p>Créer un répertoire /var/donnees/entreprise/dsi et donner les droits en lecture / ecriture uniquement au groupe informatique. Le propriétaire est hanane.</p>
+            <p>Créer un répertoire /var/donnees/entreprise/commercial et donner les droits en lecture / ecriture uniquement au groupe commercial. Le propriétaire est boris.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <a class="btn btn-primary btn-lg pull-right" href="apt.html" role="button">Continuer &raquo;</a>
+          </div>
+        </div>
+      </div>
+
+      <script src="js/vendor/jquery-1.11.2.min.js"></script>
+      <script src="js/vendor/bootstrap.min.js"></script>
+      <script src="js/main.js"></script>
+    </body>
+</html>
