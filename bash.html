@@ -1,0 +1,264 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Cours Linux 101</title>
+        <meta name="description" content="Cours Linux 101">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+            p{
+              font-size:1.5em;
+            }
+            li{
+              font-size:1.5em;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="sommaire.html">Cours Linux 101 (Sommaire)</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Les scripts BASH</h2>
+            <h3>Le shell</h3>
+            <p>La console est un outil très puissant qui permet d'effectuer des actions habituellement difficiles à réaliser dans un environnement graphique.</p>
+            <p>Le shell est le programme qui gère l'invite de commandes. C'est donc le programme qui attend que vous rentriez des commandes.</p>
+            <p>C'est aussi le programme qui est capable par exemple de :</p>
+            <ul>
+              <li>se souvenir quelles étaient les dernières commandes tapées (vous remontez dans votre historique en appuyant sur la flèche « Haut » </li>
+              <li>autocompléter une commande ou un nom de fichier lorsque vous appuyez sur Tab</li>
+              <li>gérer les processus</li>
+              <li>rediriger et chaîner les commandes</li>
+              <li>définir des alias</li>
+            </ul>
+            <p>Le .bashrc est le fichier de configuration du bash que Linux vous fait utiliser par défaut. Chaque personne peut avoir son .bashrc pour personnaliser son invite de commandes, ses alias.</p>
+            <p>Dans le .bashrc vous pouvez par exemple configuré le texte de votre prompt. Des outils en ligne existent pour vous simplifier la création de bashrc (voir http://bashrcgenerator.com/ par exemple).</p>
+            <h3>Faire des scripts</h3>
+            <p>L'avantage du shell est que l'on peut faire des scripts à partir des commandes à notre disposition dans la console.</p>
+            <p>Comme nous l'avons déjà indiqué à plusieurs reprises, la philosophie Unixienne est une commande fait une et une seule chose mais la fait bien.</p>
+            <p>C'est à partir de ce principe que vous pouvez développer des scripts puissants en bash.</p>
+            <p>Un script bash est un simple fichier texte. Pour indiquez quel shell utilisé un script commence par <code>#!/bin/bash</code> (ou bash peut être remplacé par le shell que vous utilisez).</p>
+            <p>Pour pouvoir executer un script il faut que celui ci soit executable pour l'utilisateur qui désire le lancer. (rappel : chmod +x donne le droit d'execution sur un fichier à tout le monde)</p>
+            <p>Dans un script bash toutes les commandes à votre disposition dans la console peuvent être utilisée.</p>
+            <p>Notre premier script listera simplement les fichiers dans un répertoire</p>
+            <p>Créez un fichier <code>liste.sh</code> avec le conteny suivant : </p>
+            <code>
+              #!/bin/bash<br>
+              ls
+            </code>
+            <p>Il faut rendre le fichier executable en faisant un <code>chmod +x liste.sh</code>.</p>
+            <p>Pour lancer votre fichier il suffit maintenant de taper : <code>./liste.sh</code></p>
+            <p>Quand vous développez des scripts il est parfois nécessaire de les debugguer, par exemple pour savoir à quelle ligne le script ne fonctionne pas correctement. L'option <code>-x</code> permet d'afficher la ligne executée avant d'afficher le résultat.</p>
+            <p>Si vous executez votre script avec <code>bash +x liste.sh</code> au lieu de <code>./liste.sh</code> vous serez en mode debug</p>
+            <h3>Variables</h3>
+            <p>Un script bash est capable de créer ses variables et d'utiliser les variables d'environnement existantes.</p>
+            <p>La création d'une variable est simple : <code>maVariable = "Je suis une variable"</code></p>
+            <p>Pour afficher une variable la commande <code>echo</code>. Pour indiquer au script qu'il s'agit d'une varible, il suffit de la préfixer avec un <code>$</code>.</p>
+            <p>Par exemple <code>echo $maVariable</code> affichez notre texte.</p>
+            <p>Si votre programme a par exemple besoin de demander à l'utilisateur de saisir un paramètre la fonction <code>read</code> est là pour vous aider.<code>read monParametre</code> va permettre à l'utilisateur de saisir un valeur. Cette valeur sera stockée dans la variable <code>$monParametre</code></p>
+            <p class="alert alert-danger">A FAIRE : Modifier votre script liste pour pouvoir saisir le répertoire ou vous désirez faire le ls.<br>Par exemple <code>./liste.sh tmp</code> devra afficher le contenu du répertoire tmp</p>
+            <p><code>read</code> dispose de plusieurs paramètre dont par exemple : </p>
+            <ul>
+              <li><code>-p "MESSAGE"</code> : pour afficher un texte MESSAGE avant la saisie</li>
+              <li><code>-n X</code> : pour limiter le nombre de caractères saisis à X</li>
+              <li><code>-t X</code> : pour limiter le temps de saisie à X secondes</li>
+              <li><code>-s </code> : pour ne pas afficher le texte saisi. Par exemple pour demander un mot de passe.</li>
+            </ul>
+            <h3>Opérations mathématiques</h3>
+            <p>La commande <code>let</code> permet d'effectuer des opérations mathématiques</p>
+            <p><code>let</code> permet </p>
+            <ul>
+              <li>l'addition : + </li>
+              <li>la soustraction : -</li>
+              <li>la multiplication : *</li>
+              <li>la division : / </li>
+              <li>la puissance : **</li>
+              <li>le modulo (renvoie le reste de la division entière) : %</li>
+            </ul>
+            <code>
+              let "a = 5"<br>
+              let "b = 2"<br>
+              let "c = a + b"<br>
+              echo $c
+            </code>
+            <h3>Variables d'environnement</h3>
+            <p>Il existe des variables créées par les différentes applications de Linux. En tapant <code>env</code> dans la console vous pourrez voir la liste des variables disponibles à l'utilisateur.</p>
+            <p>Ces variables s'utilisent comment mes variables que nous avons vu précédemment</p>
+            <p class="alert alert-danger">A FAIRE : Créer un script <code>retour.sh</code> qui permet de retourner au répertoire ou vous vous trouviez avant l'actuel.</p>
+            <h3>Les paramètres</h3>
+            <p>Les paramètres sont des variables que vous créez à l'appel de la fonction. Votre script gère les paramètre des la façon suivante : </p>
+            <ul>
+              <li><code>$#</code> : contient le nombre de paramètres</li>
+              <li><code>$0</code> : contient le nom du script exécuté</li>
+              <li><code>$1</code> : contient le premier paramètre</li>
+              <li><code>$2</code> : contient le deuxième paramètre</li>
+              <li><code>$x</code> : contient le xème paramètre</li>
+            </ul>
+            <p class="alert alert-danger">A FAIRE : Modifier votre script <code>liste.sh</code> pour qui liste le contenu du répertoire passé en paramètre.</p>
+            <h3>Les conditions</h3>
+            <p>Comme tout language de programmation bash dispose d'un ensemble d'outils de conditions.</p>
+            <p><code>if</code> permet de tester SI quelque chose est vrai ALORS on fait quelque chose, SINON on peut eventuellement faire autre chose</p>
+            <p>Le code d'un <code>if</code> est :</p>
+            <code>
+              if [ condition ]<br>
+              then<br>
+              &nbsp&nbsp&nbsp&nbspecho "La condition est vraie"<br>
+              fi
+            </code>
+            <p>Une condition est par exemple <code>$maVariable = "Bonjour"</code></p>
+            <p>Il est à noté qu'il est obligatoire de mettre un espace autour de la condition.</p>
+            <p><code>else</code> nous introduit le SINON et se place de la façon suivante : </p>
+            <code>
+              if [ condition ]<br>
+              then<br>
+              &nbsp&nbsp&nbsp&nbspecho "La condition est vraie"<br>
+              else<br>
+              &nbsp&nbsp&nbsp&nbspecho "La condition est n'est pas correcte !!!!"<br>
+              fi
+            </code>
+            <p>Vous pouvez effectuer différents types de test.</p>
+            <ul>
+              <li>des tests sur des chaînes de caractères</li>
+              <li>des tests sur des nombres</li>
+              <li>des tests sur des fichiers</li>
+            </ul>
+            <p>Vous pouvez sur des chaines de caractères :</p>
+            <ul>
+              <li><code>$chaine1 = $chaine2</code></li>
+              <li><code>$chaine1 != $chaine2</code> : les deux chaines sont différetes</li>
+              <li><code>-z $chaine : la chaine est vide</code></li>
+              <li><code>-n $chaine : la chaine est non vide</code></li>
+            </ul>
+            <p class="alert alert-danger">A FAIRE : modifier votre script <code>liste.sh</code> pour vérifier qu'il y a bien un paramètre. S'il n'y a pas de paramètre, afficher un message d'erreur et quitter (fonction <code>exit</code>)</p>
+            <p>Vous pouvez sur des nombres : </p>
+            <ul>
+              <li>$num1 -eq $num2 : nombres sont égaux ?</li>
+              <li>$num1 -ne $num2 : nombres sont différents ?</li>
+              <li>$num1 -lt $num2 : $num1 inférieur à $num2 ?</li>
+              <li>$num1 -le $num2 : $num1 inférieur ou égal à $num2 ?</li>
+              <li>$num1 -gt $num2 : $num1 supérieur à $num2 ?</li>
+              <li>$num1 -ge $num2 : $num1 supérieur ou égal à $num2 ?</li>
+            </ul>
+            <p class="alert alert-danger">A FAIRE : modifier votre script <code>liste.sh</code> pour vérifier le nombre de paramètres. S'il y a plus de 1 paramètre on affiche un message "Trop de paramètres" et on quitte.</p>
+            <p>Vous pouvez sur des fichiers : </p> 
+            <ul>
+              <li><code>-e $nomfichier</code> : le fichier existe ?</li>
+              <li><code>-d $nomfichier</code> : c'est un répertoire ?</li>
+              <li><code>-f $nomfichier</code> : le fichier est un fichier ? (et pas un lien symbolique ou autre chose ...)</li>
+              <li><code>-L $nomfichier</code> : lien symbolique ?</li>
+              <li><code>-r $nomfichier</code> : disponible en lecture ?</li>
+              <li><code>-w $nomfichier</code> : disponible en écriture ?</li>
+              <li><code>-x $nomfichier</code> : disponible en execution ?</li>
+              <li><code>$fichier1 -nt $fichier2</code> : $fichier1 plus récent que $fichier2</li>
+              <li><code>$fichier1 -ot $fichier2</code> : $fichier1 plus vieux que $fichier2</li>
+            </ul>
+            <p>Il est fréquent d'avoir à effectuer plusieurs tests. Dans ce cas, vous avez à votre disposition les opérateurs ET (&&) et OU (||).</p>
+            <p>Par exemple pour tester si le paramètre 1 vaut start ou stop : </p>
+            <code>
+              if [ $1 = 'start' ] || [ $1 = 'stop' ]<br>
+                echo "Commande d'arrêt ou de démarrage détectée ..."
+              fi
+            </code>
+            <p>Vous pouvez également <strong>inverser</strong> un test en mettant un ! devant la condition : </p>
+            <code>
+              if [ ! -e "/tmp/test.log" ]
+            </code>
+            <p>Dans ce cas si le fichier n'existe pas nous sommes dans la condition.</p>
+            <p>Toutefois, il arrive de se retrouver dans une situation ou de nombreux if se suivent.</p>
+            <p>Dans ces conditions <code>case</code> nous permet d'améliorer considérablement la lisibilité de notre code</p>
+            <code>
+              #!/bin/bash<br>
+              <br>
+              case $1 in<br>
+                      "start")<br>
+                              echo "Démarrage du service"<br>
+                              ;;<br>
+                      "stop")<br>
+                              echo "Arrêt du service"<br>
+                              ;;<br>
+                      "reload")<br>
+                              echo "Rechargement des fichiers de configuration"<br>
+                              ;;<br>
+                      *)<br>
+                              echo "Action par défaut ... "<br>
+                              ;;<br>
+              esac
+            </code>
+            <h3>Les boucles</h3>
+            <p>Bash nous propose des structures pour mettre en place des boucles. <code>while</code> et <code>for</code> vont vous permettre d'itérer sur des tableaux par exemple ou d'executer tant qu'une condition n'est pas remplie.</p>
+            <code>
+            while [ test ]<br>
+            do<br>
+                    echo 'Action en boucle'<br>
+            done<br>
+            <p class="alert alert-danger">A FAIRE : Faites un script <code>param.sh</code> qui prend en X paramètres. Quand on execute ce script on affiche "Param1 : valeur", "Param2 : valeur, ...."</p>
+            </code>
+            <p>Les boucles <code>for</code> permettent d'itérer sur un tableau par exemple.</p>
+            <code>
+              for variable in 'valeur1' 'valeur2' 'valeur3'<br>
+              do<br>
+                      echo "La variable vaut $variable"<br>
+              done<br>
+            </code>
+            <p>Ci dessus, nous allons executer la boucle 3 fois, c'est à dire pour chaque valeur présente dans la liste passée en paramètre du <code>for</code></p>
+            <p>Une des utilisations interressantes de <code>for</code> est de récupérer le résultat d'une commande (par exemple un <code>ls</code>) et d'itérer sur chacun des résultats.</p>
+            <code>
+              #!/bin/bash<br>
+              <br>
+              liste_fichiers=`ls`<br>
+              <br>
+              for fichier in $liste_fichiers<br>
+              do<br>
+                      echo "Fichier trouvé : $fichier"<br>
+              done<br>
+            </code>
+            <p>Notez bien que pour créer une variable avec le résultat d'une commande, la commande doit être entourée de ` (ALT GR+7 sous windows, touche à gauche de ENTREE sur Mac)</p>
+            <p>En executant par exemple la commande <code>seq</code> (voir le man de <code>seq</code>) vous pourrez générer des listes numériques.</p>
+            <p class="alert alert-success">TP : Faites un script qui permet de passer un répertoire en paramètres et qui affiche pour chaque <strong>fichier</strong> présent dans le répertoire le nombre de lignes. A la fin du script, il faut afficher le nombre total de lignes de tous les fichers<br>
+            BONUS : pour ceux qui terminent rapidement, modifiez votre script pour passer un second paramètre, le type d'extension que l'ont désire parser (ex : log, ex : conf). Dans ces cas, le script devra ne parser que les fichiers de type xxx.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <a class="btn btn-primary btn-lg pull-right" href="bash.html" role="button">Continuer &raquo;</a>
+          </div>
+        </div>
+      </div>
+
+      <script src="js/vendor/jquery-1.11.2.min.js"></script>
+      <script src="js/vendor/bootstrap.min.js"></script>
+      <script src="js/main.js"></script>
+    </body>
+</html>

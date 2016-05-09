@@ -51,24 +51,41 @@
         <div class="row">
           <div class="col-md-12">
             <h2>Gestionnaire de paquets</h2>
-            <p>Un des composants majeurs d'une distribution Linux est son gestionnaire de paquet. Il existe plusieurs logiciels de gestion de paquets comme apt ou yum.</p>
-            <p>Un paquet est une "archive" qui contient les liens ou trouver l'installation de l'application (ex : sur Internet, un DVD, un partage réseau ...) ainsi que la liste des dépendances du logiciel</p>
+            <p>Un des composants majeurs d'une distribution Linux est son gestionnaire de paquets. Il existe plusieurs logiciels de gestion de paquets comme apt ou yum.</p>
+            <p>Un paquet est une "archive" qui contient les liens ou trouver l'installation de l'application (ex : sur Internet, un DVD, un partage réseau ...), des informations sur le paquet ainsi que la liste des dépendances du logiciel</p>
             <h2>Les dépôts</h2>
             <p>Sous Linux, à contrario de Windows (bien que celà s'améliore avec les "Store"), pas besoin de naviguer sur Internet pour trouver les "Installer" des applications que l'on désire déployer.</p>
             <p>Le gestionnaire de paquet và automatiquement chercher dans les dépôts de la distribution les logiciels à télécharger.</p>
-            <p>Sous Debian par exemple, la liste des dépôts ou Debian và chercher ses logiciels se trouve dans /etc/apts/sources.list.</p>
+            <p>Sous Debian par exemple, la liste des dépôts ou Debian và chercher ses logiciels se trouve dans <code>/etc/apts/sources.list</code>.</p>
             <h2>Utilisation de apt</h2>
-            <p><strong>apt-get update</strong> : télécharge sur Internet une liste "fraîche" des paquets</p>
-            <p><strong>apt-cache search xxxxx</strong> : search un paquet dans la liste récupérée par apt-get update</p>
-            <p><strong>apt-get install xxxxx</strong> : installe le paquet et ses dépendances</p>
-            <p><strong>apt-get remove xxxxx</strong> : supprime le paquet (mais pas ses dépendances)</p>
-            <p><strong>apt-get autoremove xxxx</strong> : supprime le paquet (et ses dépendances inutilisées)</p>
-            <p><strong>apt-get autoremove --purge xxxx</strong> : supprime le paquet (et ses dépendances inutilisées) et les fichiers de configuration, variables, ....</p>
-            <p><strong>apt-get upgrade</strong> : met à jour les paquets installés</p>
+            <p><code>apt-get update</code> : télécharge sur Internet une liste "fraîche" des paquets</p>
+            <p><code>apt-cache search xxxxx</code> : search un paquet dans la liste récupérée par apt-get update</p>
+            <p><code>apt-get install xxxxx</code> : installe le paquet et ses dépendances</p>
+            <p><code>apt-get remove xxxxx</code> : supprime le paquet (mais pas ses dépendances)</p>
+            <p><code>apt-get autoremove xxxx</code> : supprime le paquet (et ses dépendances inutilisées)</p>
+            <p><code>apt-get autoremove --purge xxxx</code> : supprime le paquet (et ses dépendances inutilisées) et les fichiers de configuration, variables, ....</p>
+            <p><code>apt-get upgrade</code> : met à jour les paquets installés</p>
             <hr>
-            <p>A chaque fois que nous manipulons des paquets ils viennent se placer dans le cache local (/var/cache/apt/archives/)</p>
+            <p>A chaque fois que nous manipulons des paquets ils viennent se placer dans le cache local (<code>/var/cache/apt/archives/</code>)</p>
             <p>Si vous désinstallez puis reinstallez un paquet, la deuxième fois il le récupérera de ce répertoire et non pas d'Internet.</p>
             <p>L'utilitaire dpkg permet également de travailler avec les paquets de Debian</p>
+            <p>Quand un paquet est installé, nous pouvons connaitre tout l'historique de l'évolution du paquet et du logiciel dans les fichiers du répertoire <code>/usr/share/doc/xxxxx/</code> (ou xxxxx est le nom du logiciel)</p>
+            <hr>
+            <p>Sous Debian, les paquets sont empaquetés dans des fichiers .deb. Un .deb est une archive qui contient 3 fichiers principaux :</p>
+            <ul>
+              <li><code>control.tar.gz</code> : contient les informations sur le paquet, la liste des dépendances ...</li>
+              <li><code>data.tar.gz</code> : contient l'ensemble des fichiers à installer</li>
+              <li><code>debian_binary</code>: un simple fichier texte qui contient la version du système de package de Debian (actuellement 2)</li>
+            </ul>
+            <p>Si vous voulez travailler avec des fichiers <code>.deb</code> directement, vous ne pouvez pas utiliser les commandes <code>apt</code>. A la place l'utilitaire <code>dpkg</code> est votre trousse a outil pour manipuler ce type de fichier.</p>
+            <ul>
+              <li><code>dpkg -i xxxxx.deb</code> : installe le .deb sur l'ordinateur</li>
+              <li><code>dpkg --unpack xxxxx.deb</code> : décompresse les fichiers d'un <code>.deb</code> mais ne les installe pas</li>
+              <li><code>dpkg-reconfigure xxxxx </code> : relance la procédure initiale de configuration d'un paquet installé</li>
+              <li><code>dpkg --remove xxxxx</code> : supprime un paquet installé</li>
+              <li><code>dpkg --purge xxxxx</code> : supprime un paquet installé et tous ses fichiers variables</li>
+            </ul>
+            <p>La page <code>man</code> de <code>dpkg</code> vous donnera plus d'information sur le potentielle de cette outils</p>
             <h2>A Faire (45 min)</h2>
             <p>Installer un serveur web apache à l'aide de apt-get</p>
             <p>Récupérer la liste des paquets installés (avec dpkg)</p>
@@ -79,9 +96,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            <!--<a class="btn btn-primary btn-lg pull-right" href="apt.html" role="button">Continuer &raquo;</a>-->
-            <hr>
-            <h3 style="text-align:center">C'est fini pour aujourd'hui</h3>
+            <a class="btn btn-primary btn-lg pull-right" href="bash.html" role="button">Continuer &raquo;</a>
           </div>
         </div>
       </div>
