@@ -1,0 +1,112 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Cours Linux 101</title>
+        <meta name="description" content="Cours Linux 101">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+            p{
+              font-size:1.5em;
+            }
+            li{
+              font-size:1.5em;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="sommaire.html">Cours Linux 101 (Sommaire)</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Travaux Pratiques - BASH</h2>
+            <p>Vous savez maintenant tout ce qu'il faut pour créer des scripts BASH automatisant des tâches. </p>
+            <p>Vous aurez aujourd'hui à créer des scripts BASH. <strong>Nommez bien vos fichiers comme indiqué à chaque début d'exercice</strong></p>
+            <p>Seul le travail en <strong>binôme</strong> est autorisé</p>
+            <p>Vos scripts sont à envoyer à l'adresse <strong>jeremysalmon.openlab@gmail.com</strong></p>
+            <p>Veillez bien à mettre les noms, prénoms de votre binôme.</p>
+            <h2>Exercice 1 : compress.sh</h2>
+            <h4>Système de backup</h4>
+            <p>Créer un script qui permet de compresser l'ensemble du répertoire /etc/ dans un fichier .tar.gz.</p>
+            <p>Le script prend un paramètre, le nom du fichier à générer</p>
+            <p>Le résultat de la compression est à mettre dans /tmp/</p>
+            <p>Résultat attendu : </p>
+            <code>compress.sh 21052016</code>
+            <p>Devra générer un fichier 21052015.tar.gz dans /tmp/</p>
+            <p>Ce fichier contiendra l'ensemble du répertoire /etc/</p>
+            <hr>
+            <h2>Exercice 2 : sshHack.sh</h2>
+            <p>Créer un script qui analyse un fichier de log d'authentification et qui repère les erreur d'authenficiation SSH.</p>
+            <p>Récupérer le fichier auth.log à la racine de ce support de cours.</p>
+            <p>Le fichier à analyser sera passé en paramètre</p>
+            <code>sshHack.sh /tmp/auth.log</code>
+            <p>affichera </p>
+            <code>Il y a 39 erreurs d'authentification
+                  <br>
+                  Dernière erreur d'authentification à 23:12:34
+            </code>
+            <hr>
+            <h2>Exercice 3 : isInstalled.sh</h2>
+            <p>Créer un script qui retourne si un paquet est installé ou non sur la machine.</p>
+            <p>Le nom du paquet a rechercher est à passer en paramètre</p>
+            <code>isInstalled.sh mysql-server</code>
+            <p>Retournera :</p>
+            <code>Le paquet est INSTALLE</code> si il est présent sur la machine
+            <o>ou</o>
+            <code>Le paquet est MANQUANT</code> s'il n'est pas installé
+            <hr>
+            <h2>Exercice 4 : jeter.sh</h2>
+            <p>L'objectif est de faire un script qui permet de mettre un fichier dans un répertoire <code>corbeille</code></p>
+            <p>L'emplacement du répertoire <code>corbeille</code> est à votre convenance</p>
+            <p>Le script doit permettre :</p>
+            <ul>
+              <li><code>jeter.sh -l</code> : affiche le contenu du répertoire corbeille</li>
+              <li><code>jeter.sh -a FICHIER</code> : déplace le FICHIER dans le répertoire corbeille</li>
+              <li><code>jeter.sh -d FICHIER</code> : supprime définitivement le fichier de la corbeille</li>
+              <li><code>jeter.sh --flush</code> : vide entièrement la corbeille</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <a class="btn btn-primary btn-lg pull-right" href="bashTp.html" role="button">Continuer &raquo;</a>
+          </div>
+        </div>
+      </div>
+
+      <script src="js/vendor/jquery-1.11.2.min.js"></script>
+      <script src="js/vendor/bootstrap.min.js"></script>
+      <script src="js/main.js"></script>
+    </body>
+</html>
