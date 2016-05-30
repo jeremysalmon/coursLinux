@@ -68,15 +68,15 @@
             
             <code>
                 #!/bin/bash<br>
-<br>
+                <br>
                     if [ $# -ne 1 ]<br>
                     then<br>
                         echo "Utilisation : compress.sh nom_du_fichier"<br>
                         exit<br>
                     fi<br>
-<br>
+                    <br>
                     tar vczf /tmp/$1.tar.gz /etc/ > /dev/null 2>&1<br>
-<br>
+                    <br>
                     echo "Compression dans /tmp/$1.tar.gz effectuee"<br>
             </code>
             
@@ -91,6 +91,27 @@
                   <br>
                   Dernière erreur d'authentification à 23:12:34
             </code>
+
+            <code>
+            #!/bin/bash<br>
+            <br>
+            if [ $# -ne 1 ]<br>
+            then<br>
+                    echo "Utilisation : sshHack.sh CHEMIN_ET_NOM_FICHIER"<br>
+                    exit<br>
+            fi<br>
+            <br>
+            if [ ! -f $1 ]<br>
+            then<br>
+                    echo "Le fichier $1 n existe pas"<br>
+                    exit<br>
+            fi<br>
+<br>
+            compteur=`grep "authentication failure" auth.log |wc -l`<br>
+<br>
+            echo "$compteur erreurs d authentification dans $1"<br>
+            exit<br>
+            </code>
             <hr>
             <h2>Exercice 3 : isInstalled.sh</h2>
             <p>Créer un script qui retourne si un paquet est installé ou non sur la machine.</p>
@@ -100,6 +121,25 @@
             <code>Le paquet est INSTALLE</code> si il est présent sur la machine
             <o>ou</o>
             <code>Le paquet est MANQUANT</code> s'il n'est pas installé
+            <code>
+            #!/bin/bash<br>
+<br>
+            if [ $# -ne 1 ]<br>
+            then<br>
+                    echo "Utilisation : isInstalled.sh NOM_DU_PAQUET"<br>
+                    exit<br>
+            fi<br>
+<br>
+            installed=`dpkg-query -l $1 |grep ii |wc -l`<br>
+<br>
+            if [ $installed -eq 1 ]<br>
+            then<br>
+                    echo "Le paquet $1 est installe"<br>
+                    exit<br>
+            fi<br>
+            </code>
+<br>
+            echo "Le paquet $1 n est pas installe"<br>
             <hr>
             <h2>Exercice 4 : jeter.sh</h2>
             <p>L'objectif est de faire un script qui permet de mettre un fichier dans un répertoire <code>corbeille</code></p>
@@ -111,6 +151,65 @@
               <li><code>jeter.sh -d FICHIER</code> : supprime définitivement le fichier de la corbeille</li>
               <li><code>jeter.sh --flush</code> : vide entièrement la corbeille</li>
             </ul>
+            <code>
+            #!/bin/bash<br>
+<br>
+            if [ $# -lt 1 ]<br>
+            then<br>
+                    echo "Utilisation : "<br>
+                    echo "jeter.sh -l : affiche le contenu du répertoire corbeille"<br>
+                    echo "jeter.sh -a FICHIER : déplace le FICHIER dans le répertoire corbeille"<br>
+                    echo "jeter.sh -d FICHIER : supprime définitivement le fichier de la corbeille"<br>
+                    echo "jeter.sh --flush : vide entièrement la corbeille"<br>
+                    exit<br>
+            fi<br>
+<br>
+            if [ ! -d "/tmp/corbeille" ]<br>
+            then<br>
+                    mkdir /tmp/corbeille<br>
+            fi<br>
+<br>
+            case "$1" in<br>
+                    -l)<br>
+                            echo `ls -l /tmp/corbeille`<br>
+                            exit<br>
+                            ;;<br>
+                    -a)<br>
+                        if [ $# -ne 2 ]<br>
+                        then<br>
+                                echo "Utilisation : jeter.sh -a FICHIER"<br>
+                                exit<br>
+                        fi<br>
+                        mv $2 /tmp/corbeille/<br>
+                        echo "Le fichier $2 a été déplacé dans /tmp/corbeille"<br>
+                        exit<br>
+                        ;;<br>
+                -d)<br>
+                        if [ $# -ne 2 ]<br>
+                        then<br>
+                                echo "Utilisation : jeter.sh -d FICHIER"<br>
+                                exit<br>
+                        fi<br>
+                        if [ ! -e "/tmp/corbeille/$2" ]<br>
+                        then<br>
+                                echo "Le fichier $2 n existe pas dans la corbeille !"<br>
+                                echo "Impossible de continuer"<br>
+                                exit<br>
+                        fi<br>
+                        rm /tmp/corbeille/$2<br>
+                        echo "Le fichier $2 a été supprimé de la corbeille"<br>
+                        exit<br>
+                        ;;<br>
+                --flush)<br>
+                        rm /tmp/corbeille/*<br>
+                        echo "La corbeille a été vidée avec succès"<br>
+                        exit<br>
+                        ;;<br>
+        esac<br>
+<br>
+        echo "Le parametre $1 est inconnu"<br>
+        exit<br>
+            </code>
           </div>
         </div>
         <div class="row">
