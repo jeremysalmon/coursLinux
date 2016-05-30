@@ -1,0 +1,172 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Cours Linux 101</title>
+        <meta name="description" content="Cours Linux 101">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+            p{
+              font-size:1.5em;
+            }
+            li{
+              font-size:1.5em;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="sommaire.html">Cours Linux 101 (Sommaire)</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Installation d'un serveur DNS</h2>
+            <h3>Quelques rappels DNS</h3>
+            <ul>
+              <li>
+                <strong>$TTL </strong>: (Time To Live) exprime la duree (en secondes) de validité, par défaut, des informations que contiennent les RRs. Une fois ce délai expiré, il est nécessaire de vérifier à nouveau les données. Les différents types :
+              </li>
+              <li>
+                <strong>SOA</strong> : permet de définir les informations relatives à la zone. En l'occurrence le nom du serveur DNS primaire "sid.example.com." et l'adresse mail du contact technique (root.example.com. ; le @ est remplace par un point). Il est compose de plusieurs champs :
+                <ul>
+                  <li style="font-size:1em !important">1. Serial : est un entier non signé 32 bits. C'est le numéro de série à incrémenter à chaque modification du fichier. Il permet au serveur secondaire de recharger les informations qu'ils ont. L'usage général vient à le formater de cette manière YYYYMMDDXX, soit pour la première modification du 01/04/2007 -> 2007040101, pour la seconde 2007040102.
+                  </li>
+
+                  <li style="font-size:1em !important">2. Refresh : définit la période de rafraîchissement des données.</li>
+
+                  <li style="font-size:1em !important">3. Retry : si une erreur survient au cours du dernier rafraîchissement, celle-ci sera répétée au bout du délai Retry.</li>
+
+                  <li style="font-size:1em !important">4. Expire : le serveur sera considéré comme non disponible au bout du délai Expire.</li>
+
+                  <li style="font-size:1em !important">5. Negative cache TTL : définit la durée de vie d'une réponse NXDOMAIN de notre part. </li>
+                </ul>
+              </li>
+              <li><strong>NS</strong> : renseigne le nom des serveurs de noms pour le domaine.</li>
+
+              <li><strong>MX</strong>: renseigne sur le serveur de messagerie. Plusieurs peuvent être définis. Ainsi, il est possible de leur donner une priorité en leur affectant un numéro. Plus bas est le numéro, plus haute est la priorité.</li>
+
+              <li><strong>A</strong> : associe une nom d'hôte à une adresse ipv4 (32 bits)</li>
+
+              <li><strong>AAAA</strong> : associe une nom d'hôte à une adresse ipv6 (128 bits)</li>
+
+              <li><strong>CNAME</strong> : identifie le nom canonique d'un alias (un nom pointant sur un autre nom)</li>
+
+              <li><strong>PTR</strong> : c'est simplement la résolution inverse (le contraire du type A). </li>
+            </ul>
+            <hr>
+            <h3>BIND9 : serveur DNS sous Linux</h3>
+            <p>Pour installer bind9 tapez la commande habituelle <code>apt-get install bind9</code></p>
+            <p>Les fichiers de configuration se situent dans <code>/etc/bind/</code></p>
+            <p>Le fichier <code>/etc/bind/db.local</code> nous servira d'exemple pour créer notre domaine.</p>
+            <p>Faites un <code>cp /etc/bind/db.local /etc/bind/db.VOTRE_NOM.com</code></p>
+            <p>Avant d'éditer le fichier de configuration, récupérez l'adresse IP de votre machine virtuelle.</p>
+            <p>Editez ensuite ce fichier pour créer la première machine: </p>
+            <code>
+              $TTL    604800<br>
+              @   IN  SOA mavm.VOTRE_NOM.com. root.VOTRE_NOM.com. (<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;2     ; Serial<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;604800     ; Refresh<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;86400     ; Retry<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;2419200     ; Expire<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;604800 )   ; Negative Cache TTL<br>
+                                <br>
+              @   IN  NS  mavm.VOTRE_NOM.com.<br>
+              mavm  IN  A   VOTRE_IP
+            </code>
+            <p>Nous devons maintenant configurer la resolution inverse pour notre domaine. Nous nous appuierons sur le fichier <code>/etc/bind/db.127</code></p>
+            <p>Copiez le fichier pour votre domaine <code>cp /etc/bind/db.127 /etc/bind/db.VOTRE_NOM.com.inv</code></p>
+            <code>
+              $TTL  604800<br>
+              @ IN  SOA mavm.VOTRE_NOM.COM. root.VOTRE_NOM.com. (<br>
+                                            1   ; Serial<br>
+                                       604800   ; Refresh<br>
+                                        86400   ; Retry<br>
+                                      2419200   ; Expire<br>
+                                       604800 ) ; Negative Cache TTL<br>
+              @ IN  NS  mavm.<br>
+              <br>
+              230 IN  PTR mavm.VOTRE_NOM.com.
+            </code>
+            <p>Les fichiers de congiguration de votre DNS sont prêts. Nous allons demander à BIND de les charger</p>
+            <p>Editez le fichier <code>/etc/bind/named.conf.local</code> et ajoutez </p>
+            <code>
+              zone "VOTRE_NOM.com" {<br>
+                   type master;<br>
+                   file "/etc/bind/db.VOTRE_NOM.com";<br>
+                   forwarders{};<br>
+              };
+            </code>
+            <p>Il faut également charger le fichier de configuration de la zone inverse.</p>
+            <code>
+              zone "2.168.192.in-addr.arpa" {<br>
+                   type master;<br>
+                   file "/etc/bind/db.VOTRE_NOM.com.inv";<br>
+                   forwarders{};<br>
+              };
+            </code>
+            <p>Votre serveur est maintenant prêt à devenir le DNS de votre réseau. Par contre il ne contient pas tous les noms de domaines du monde, ce qui veut dire que si vous essayez d'accéder à www.google.fr par exemple, il sera incapable de résoudre le nom.</p>
+            <p>Nous allons donc indiquer à BIND de forwarder toutes les requêtes qu'il n'arrive pas à résoudre vers un autre serveur DNS par exemple ceux de Google.</p>
+            <p>Editez le fichier <code>/etc/bind/named.conf.options</code></p>
+            <code>
+              forwarders {<br>
+              212.27.40.240;<br>
+              212.27.40.241;<br>
+              };
+            </code>
+            <p>Vous pouvez enfin redémarrer votre serveur DNS avec <code>/etc/init.d/bind9 restart</code></p>
+            <p>Pour vérifier que vos fichier de configuration fonctionnent correctement vous avec plusieurs commandes à votre disposition : </p>
+            <code>
+              named-checkzone webadonf.lan /etc/bind/db.VOTRE_NOM.com<br>
+              named-checkzone webadonf.lan /etc/bind/db.VOTRE_NOM.com.inv<br>
+              named-checkconf /etc/bind/named.conf<br>
+              named-checkconf /etc/bind/named.conf.options
+            </code>
+            <p>Vous pouvez maintenant changer le DNS de votre machine Windows pour indiquer l'adresse IP de votre serveur Linux.</p>
+            <p>Dans <code>cmd.exe</code> vous pouvez maintenant taper : </p>
+            <code>nslookup + mavm.VOTRE_NOM.com</code>
+            <p>ou</p>
+            <code>nslookup + @IP_MA_VM</code>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <a class="btn btn-primary btn-lg pull-right" href="serveurDNS.html" role="button">Continuer &raquo;</a>
+          </div>
+        </div>
+      </div>
+
+      <script src="js/vendor/jquery-1.11.2.min.js"></script>
+      <script src="js/vendor/bootstrap.min.js"></script>
+      <script src="js/main.js"></script>
+    </body>
+</html>
