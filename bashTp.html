@@ -65,6 +65,21 @@
             <code>compress.sh 21052016</code>
             <p>Devra générer un fichier 21052015.tar.gz dans /tmp/</p>
             <p>Ce fichier contiendra l'ensemble du répertoire /etc/</p>
+            
+            <code>
+                #!/bin/bash<br>
+<br>
+                    if [ $# -ne 1 ]<br>
+                    then<br>
+                        echo "Utilisation : compress.sh nom_du_fichier"<br>
+                        exit<br>
+                    fi<br>
+<br>
+                    tar vczf /tmp/$1.tar.gz /etc/ > /dev/null 2>&1<br>
+<br>
+                    echo "Compression dans /tmp/$1.tar.gz effectuee"<br>
+            </code>
+            
             <hr>
             <h2>Exercice 2 : sshHack.sh</h2>
             <p>Créer un script qui analyse un fichier de log d'authentification et qui repère les erreur d'authenficiation SSH.</p>
