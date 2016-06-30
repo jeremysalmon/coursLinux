@@ -71,8 +71,8 @@
                 <br>
                     if [ $# -ne 1 ]<br>
                     then<br>
-                        echo "Utilisation : compress.sh nom_du_fichier"<br>
-                        exit<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;echo "Utilisation : compress.sh nom_du_fichier"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;exit<br>
                     fi<br>
                     <br>
                     tar vczf /tmp/$1.tar.gz /etc/ > /dev/null 2>&1<br>
@@ -97,14 +97,14 @@
             <br>
             if [ $# -ne 1 ]<br>
             then<br>
-                    echo "Utilisation : sshHack.sh CHEMIN_ET_NOM_FICHIER"<br>
-                    exit<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Utilisation : sshHack.sh CHEMIN_ET_NOM_FICHIER"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;exit<br>
             fi<br>
             <br>
             if [ ! -f $1 ]<br>
             then<br>
-                    echo "Le fichier $1 n existe pas"<br>
-                    exit<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Le fichier $1 n existe pas"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;exit<br>
             fi<br>
 <br>
             compteur=`grep "authentication failure" auth.log |wc -l`<br>
@@ -126,16 +126,16 @@
 <br>
             if [ $# -ne 1 ]<br>
             then<br>
-                    echo "Utilisation : isInstalled.sh NOM_DU_PAQUET"<br>
-                    exit<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Utilisation : isInstalled.sh NOM_DU_PAQUET"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;exit<br>
             fi<br>
 <br>
             installed=`dpkg-query -l $1 |grep ii |wc -l`<br>
 <br>
             if [ $installed -eq 1 ]<br>
             then<br>
-                    echo "Le paquet $1 est installe"<br>
-                    exit<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Le paquet $1 est installe"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;exit<br>
             fi<br>
             </code>
 <br>
@@ -156,55 +156,55 @@
 <br>
             if [ $# -lt 1 ]<br>
             then<br>
-                    echo "Utilisation : "<br>
-                    echo "jeter.sh -l : affiche le contenu du répertoire corbeille"<br>
-                    echo "jeter.sh -a FICHIER : déplace le FICHIER dans le répertoire corbeille"<br>
-                    echo "jeter.sh -d FICHIER : supprime définitivement le fichier de la corbeille"<br>
-                    echo "jeter.sh --flush : vide entièrement la corbeille"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Utilisation : "<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "jeter.sh -l : affiche le contenu du répertoire corbeille"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "jeter.sh -a FICHIER : déplace le FICHIER dans le répertoire corbeille"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "jeter.sh -d FICHIER : supprime définitivement le fichier de la corbeille"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "jeter.sh --flush : vide entièrement la corbeille"<br>
                     exit<br>
             fi<br>
 <br>
             if [ ! -d "/tmp/corbeille" ]<br>
             then<br>
-                    mkdir /tmp/corbeille<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;mkdir /tmp/corbeille<br>
             fi<br>
 <br>
             case "$1" in<br>
-                    -l)<br>
-                            echo `ls -l /tmp/corbeille`<br>
-                            exit<br>
-                            ;;<br>
-                    -a)<br>
-                        if [ $# -ne 2 ]<br>
-                        then<br>
-                                echo "Utilisation : jeter.sh -a FICHIER"<br>
-                                exit<br>
-                        fi<br>
-                        mv $2 /tmp/corbeille/<br>
-                        echo "Le fichier $2 a été déplacé dans /tmp/corbeille"<br>
-                        exit<br>
-                        ;;<br>
-                -d)<br>
-                        if [ $# -ne 2 ]<br>
-                        then<br>
-                                echo "Utilisation : jeter.sh -d FICHIER"<br>
-                                exit<br>
-                        fi<br>
-                        if [ ! -e "/tmp/corbeille/$2" ]<br>
-                        then<br>
-                                echo "Le fichier $2 n existe pas dans la corbeille !"<br>
-                                echo "Impossible de continuer"<br>
-                                exit<br>
-                        fi<br>
-                        rm /tmp/corbeille/$2<br>
-                        echo "Le fichier $2 a été supprimé de la corbeille"<br>
-                        exit<br>
-                        ;;<br>
-                --flush)<br>
-                        rm /tmp/corbeille/*<br>
-                        echo "La corbeille a été vidée avec succès"<br>
-                        exit<br>
-                        ;;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;-l)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo `ls -l /tmp/corbeille`<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;-a)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if [ $# -ne 2 ]<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;then<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "Utilisation : jeter.sh -a FICHIER"<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fi<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mv $2 /tmp/corbeille/<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "Le fichier $2 a été déplacé dans /tmp/corbeille"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;-d)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if [ $# -ne 2 ]<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;then<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "Utilisation : jeter.sh -d FICHIER"<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fi<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if [ ! -e "/tmp/corbeille/$2" ]<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;then<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "Le fichier $2 n existe pas dans la corbeille !"<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "Impossible de continuer"<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fi<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rm /tmp/corbeille/$2<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "Le fichier $2 a été supprimé de la corbeille"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;--flush)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rm /tmp/corbeille/*<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "La corbeille a été vidée avec succès"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;;<br>
         esac<br>
 <br>
         echo "Le parametre $1 est inconnu"<br>

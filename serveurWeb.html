@@ -1,0 +1,135 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Cours Linux 101</title>
+        <meta name="description" content="Cours Linux 101">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+            p{
+              font-size:1.5em;
+            }
+            li{
+              font-size:1.5em;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="sommaire.html">Cours Linux 101 (Sommaire)</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Installation d'un serveur Web</h2>
+            <h3>Pourquoi un serveur Web</h3>
+            
+            <p>Le serveur Web est la brique la plus commune dans une infrastructure Linux. De ce fait, les système de package ont automatisé au maximum le déploiement et la configuration d'une <strong>stack</strong> web complète (Apache / PHP / Mysql)</p>
+
+            <h3>Installation d'un serveur Web</h3>
+            <p>Le serveur web que nous allons installer est Apache.</p>
+            <code>apt-get install apache2</code>
+            <p>Les fichiers de configuration de Apache se trouve dans <code>/etc/apache2/</code></p>
+            <p>Le fichier de configuration global de Apache se trouve dans le fichier <code>apache2.conf</code>. Comme la majorité des fichiers de configuration des applications installés par apt, de nombreux commentaires nous indiquent les possibilités du fichier. Dans une situation classique, vous n'aurez pas à modifier ce fichier.</p>
+            <p>Le répertoire <code>sites-available</code> contient les fichiers de configuration de chacun des sites configurés sur votre serveur. Un premier fichier <code>000-default.conf</code> contient la configuration du site par défaut. Ses fichiers sont stockés dans <code>/var/www/html/</code>. Le site n'est pas actif tant qu'un lien symbolique n'est pas créé dans le répertoire <code>sites-enabled</code>. Pour créé ce lien symbolique Apache offre la commande <code>a2ensite</code></p>
+            <p>Un deuxième fichier de configuration <code>default-ssl.conf</code> est lui réservé aux sites en HTTPS.</p>
+            <h3>Installation d'un serveur de base de données</h3>
+            <p>MySQL est un serveur simple de gestion de base de données. Pour l'installé nous avons besoin d'installer la partie serveur qui và être le moteur de données répondant à nos requêtes et lisant/écrivant sur le disque dur. Nous avons également besoin de la partie client qui nous permettra de nous connecter au serveur et d'envoyer les commandes pour par exemple créer des bases ou récupérer des informations dans celles-ci.</p>
+            <p>Il est a noter que le client peut être installé sur une autre machine, mais dans ce cas, il faudra modifier la configuration par défaut de MySQL pour qu'il accepte les connexions réseau.</p>
+            <code>apt-get install mysql-server mysql-client</code>
+            <p>Durant l'installation vous aurez à saisir un mot de passe qui sera utilisé pour l'administrateur de la base de données.</p>
+            <p>Les étapes suivantes nous permettront :</p>
+            <ul>
+              <li>De se connecter au serveur avec le client</li>
+              <li>De créé une base de données</li>
+              <li>De créé un utilisateur pour la base de données</li>
+              <li>De créé une table dans la base</li>
+              <li>D'insérer quelques données dans la base (notez que nous mettrons la valeur id à 0 car c'est un champs auto_increment. MySQL s'occupera donc d'incrémenter la valeur)</li>
+              <li>D'afficher les données insérées</li>
+            </ul>
+            <code>
+            mysql -u root -pMOT_DE_PASSE<br>
+            create database NOM_DE_BASE;<br>
+            grant all on NOM_DE_BASE.* to LOGIN_UTILISATEUR@localhost identified by 'MOT_DE_PASSE';<br>
+            use NOM_DE_BASE;<br>
+            create table eleve(id int auto increment, login text, primary key(id));<br>
+            insert into eleve values(0,'utilisateur1');<br>
+            insert into eleve values(0,'utilisateur2');<br>
+            select * from eleve;
+            </code>
+            <p>Vous disposez maintenant d'une base de données avec une table élève.</p>
+            <h3>Installation de PHP</h3>
+            <p>PHP est un language de script qui peut être utilisé pour faire des applications Web mais également des scripts en mode console.</p>
+            <p>Pour que notre serveur web soit complet il va devoir savoir interpréter nos scripts PHP et nous générer les pages HTML résultantes.</p>
+            <p>Nous installerons donc le language PHP et le module pour Apache qui lui permettra de parser les scripts PHP. Sans ce module, Apache sera incapable de comprendre ce qu'est un script PHP.</p>
+            <code>apt-get install php5 libapache2-mod-php5</code>
+            <p>Enfin nous installerons un module pour PHP qui lui permettra de se connecter à une base de données MySQL.</p>
+            <code>apt-get install php5-mysql</code>
+            <p>Nous allons maintenant créer deux pages PHP dans le répertoire <code>/var/www/html/</code></p>
+            <ul>
+              <li>info.php : nous donnera des informations sur PHP et nous permettra de valider que tout est bien installé.</li>
+              <li>mysql.php : nous affichera le contenu de la table eleve et nous permettra d'apprendre à nous connecter à une base de données avec PHP.</li>
+            </ul>
+            <h2>info.php</h2>
+            <code>
+            &lt;?php<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;phpinfo();<br>
+            ?>
+            </code>
+            <h2>mysql.php</h2>
+            <code>
+            &lt;?php<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;$con = <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;mysqli_connect('locahost','LOGIN_UTILISATEUR','MOT_DE_PASSE','test');<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;$sql = "SELECT * FROM eleve";<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;$query = mysqli_query($con, $sql);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;while($result = mysqli_fetch_array($query)){<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo('&lt;pre>');<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print_r($result);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo('&lt;/pre>');<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            ?>
+            </code>
+            <p>Félicitations, vous avez maintenant configuré un serveur complet Apache/Mysql/PHP</p>
+        </div>  
+        <div class="row">
+          <div class="col-md-12">
+            <a class="btn btn-primary btn-lg pull-right" href="serveurDNS.html" role="button">Continuer &raquo;</a>
+          </div>
+        </div>
+      </div>
+
+      <script src="js/vendor/jquery-1.11.2.min.js"></script>
+      <script src="js/vendor/bootstrap.min.js"></script>
+      <script src="js/main.js"></script>
+    </body>
+</html>
