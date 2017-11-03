@@ -106,6 +106,33 @@
             <p>Créer un répertoire /var/donnees/entreprise/compta et donner les droits en lecture / ecriture uniquement au groupe compta. Le propriétaire est reda</p>
             <p>Créer un répertoire /var/donnees/entreprise/dsi et donner les droits en lecture / ecriture uniquement au groupe informatique. Le propriétaire est hanane.</p>
             <p>Créer un répertoire /var/donnees/entreprise/commercial et donner les droits en lecture / ecriture uniquement au groupe commercial. Le propriétaire est boris.</p>
+            <h2>Correction</h2>
+               11  addgroup commercial<br>
+   12  addgroup compta<br>
+   13  addgroup informatique<br>
+   14  adduser reda<br>
+   16  usermod -aG compta reda<br>
+   18  adduser hanane --ingroup informatique<br>
+   20  usermod -aG commercial boris<br>
+   22  usermod -G boris,commercial boris<br>
+   38  adduser ahmed<br>
+   39  usermod -G informatique,compta,commercial ahmed<br>
+   41  cd /var/<br>
+   44  mkdir donnees<br>
+   45  mkdir donnees/entreprise<br>
+   46  mkdir donnees/entreprise/compta<br>
+   48  cd donnees/entreprise/<br>
+   50  chmod 060 compta/<br>
+   52  chown reda:compta compta/<br>
+   54  chmod 060 compta/<br>
+   55  chown reda:compta compta/<br>
+   57  mkdir dsi<br>
+   59  chown hanane:informatique dsi/<br>
+   61  chmod 060 dsi/<br>
+   63  mkdir commercial<br>
+   68  chmod 060 commercial/<br>
+   
+   70  history
           </div>
         </div>
         <div class="row">
